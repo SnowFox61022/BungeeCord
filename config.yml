@@ -1,0 +1,284 @@
+# BungeeCord 配置说明
+
+BungeeCord 的 config.yml 相关说明
+
+
+默认 config.yml
+
+代码（文本）：
+
+server_connect_timeout: 5000
+remote_ping_cache: -1
+forge_support: false
+player_limit: -1
+permissions:
+  default:
+  - bungeecord.command.server
+  - bungeecord.command.list
+  admin:
+  - bungeecord.command.alert
+  - bungeecord.command.end
+  - bungeecord.command.ip
+  - bungeecord.command.reload
+timeout: 30000
+log_commands: false
+network_compression_threshold: 256
+online_mode: true
+disabled_commands:
+- disabledcommandhere
+servers:
+  lobby:
+    motd: '&1Just another BungeeCord - Forced Host'
+    address: localhost:25565
+    restricted: false
+listeners:
+- query_port: 25577
+  motd: '&1Another Bungee server'
+  tab_list: GLOBAL_PING
+  query_enabled: false
+  proxy_protocol: false
+  forced_hosts:
+    pvp.md-5.net: pvp
+  ping_passthrough: false
+  priorities:
+  - lobby
+  bind_local_address: true
+  host: 0.0.0.0:25577
+  max_players: 1
+  tab_size: 60
+  force_default_server: false
+ip_forward: false
+remote_ping_timeout: 5000
+prevent_proxy_connections: false
+groups:
+  md_5:
+  - admin
+connection_throttle: 4000
+stats: c4b9cabb-93e9-4bce-93ab-4b18642e6f3e
+connection_throttle_limit: 3
+log_pings: true
+
+
+## groups（用户组）
+默认值：
+```
+md_5:
+- admin
+```
+类型：部分（Section）
+描述：在这里，你可以将玩家分配到你在配置中已创建的权限组。格式是先写“groups”，然后是每个玩家，接着是他们所属的每个组。默认情况下，md_5 被分配到“admin”组，该组拥有“permissions”部分所定义的权限。每个玩家都属于“default”组。只需添加那些需要比默认权限更多权限的玩家。
+
+
+## disabled_commands（禁用的命令）
+默认值：disabledcommandhere
+类型：列表（List）
+描述：用于在你的 BungeeCord 实例上禁用命令。
+
+
+## player_limit（玩家数量限制）
+默认值：-1
+类型：整数（Integer）
+描述：BungeeCord 实例的全局玩家数量限制。如果设置为 0 或以下，将允许无限数量的用户加入。
+
+
+## log_commands（记录命令）
+默认值：false
+类型：布尔值（Boolean）
+描述：当玩家输入 BungeeCord 命令时，该命令也会被记录到 BungeeCord 控制台中。
+
+
+## log_pings（记录 ping 信息）
+默认值：true
+类型：布尔值（Boolean）
+描述：当玩家 ping  BungeeCord 服务器时，该 ping 信息会被记录到 BungeeCord 控制台中。
+
+
+## stats（统计信息）
+默认值：（随机生成的字符串）
+类型：字符串（String）
+描述：用于统计目的，请不要删除或修改此代码。这是一个随机生成的编号，用于提供统计数据。统计信息是在 MCStats 上收集的匿名使用数据包。你绝对不应该编辑此项，所以请保持原样！
+
+
+## permissions（权限）
+默认值：
+```
+default:
+- bungeecord.command.server
+- bungeecord.command.list
+admin:
+- bungeecord.command.alert
+- bungeecord.command.end
+- bungeecord.command.ip
+- bungeecord.command.reload
+```
+类型：部分（Section）
+描述：这些是你在代理中可以使用的命令或操作的权限。请注意，这些与 Bukkit/Spigot 的权限不同。这些权限是基于组的，用于在配置中关联玩家。所有玩家都能够使用“default”组下的命令，那些在“groups”部分中被分配到“admin”组的玩家，允许使用该组下所列的额外 BungeeCord 命令。请注意，每个组仅继承“default”组的权限，所以如果你添加了更多组，可能需要在不同的组中放入相同的权限节点。
+
+
+## listeners（监听器）
+默认值：（见上文默认配置）
+类型：部分（Section）
+描述：以下各项是可配置选项，位于 BungeeCord 配置的“listeners”部分中。可以添加多个监听器，以监听多个 IP 和端口。
+
+
+### max_players（最大玩家数）
+默认值：1
+类型：整数（Integer）
+描述：在 Minecraft 客户端的多人游戏菜单中显示的最大玩家数。请注意，这个限制是虚假的，你可以将其设置为 0，玩家仍然能够加入。有关“真实”的玩家数量限制，请查看上面的“player_limit”。
+
+
+### host（主机地址）
+默认值：0.0.0.0:25577
+类型：字符串（String）
+描述：BungeeCord 实例将托管在的 IP 和端口。使用 0.0.0.0 以监听所有 IP（推荐）。
+
+
+### bind_local_address（绑定本地地址）
+默认值：true
+类型：布尔值（Boolean）
+描述：Bungee 用于连接到你的服务器的地址是否明确设置为 Bungee 正在监听的地址。除非你的系统有多个 IP 地址，否则此选项没有作用。
+
+
+### ping_passthrough（ping 穿透）
+默认值：false
+类型：布尔值（Boolean）
+描述：当我们能够可靠地获取目标服务器（强制默认服务器）时，是否进行 ping 穿透。当设为 true 时，当查询强制主机时，Bungee 会显示后端服务器的玩家数量和 MOTD（服务器信息）。
+
+
+### tab_list（列表）
+默认值：GLOBAL_PING
+类型：字符串（String）
+描述：列表有 3 个选项可供选择：
+- GLOBAL_PING：显示所有连接到代理的玩家，并包含 ping 值。
+- GLOBAL：与上面相同，但不更新他们的 ping 值。
+- SERVER：显示你所连接的服务器上的本地玩家。
+
+注意：由于 BungeeCord 1.8+ 使用新的列表，建议你使用插件 GlobalTablist 或 BungeeTabListPlus 以在 1.8+ 版本中实现此功能。
+
+
+### priorities（优先级）
+默认值：lobby
+类型：列表（List）
+描述：当玩家首次连接，或者“force_default_server”启用时，BungeeCord 会从上到下遍历此服务器列表，并尝试将连接转发到其中的每个服务器。所以如果你想支持多个客户端版本，只需为每个版本指定至少一个服务器，BungeeCord 会进行匹配。
+
+
+### forced_hosts（强制主机）
+默认值：pvp.md-5.net: pvp
+类型：映射（Map）
+描述：允许重定向。如果加入的是 md-5.net 域名的子域名 pvp.md-5.net，它将绕过默认服务器，直接连接到配置中指定的服务器，在这种情况下是直接连接到 pvp 服务器。注意：这需要你通过主动态 DNS 为你的主域名设置子域名转发到你的 BungeeCord 地址。
+
+
+### tab_size（列表大小）
+默认值：60
+类型：整数（Integer）
+描述：将显示在列表中的玩家数量（按键盘上的 Tab 键显示）。
+
+
+### force_default_server（强制默认服务器）
+默认值：false
+类型：布尔值（Boolean）
+描述：如果设为 true，玩家每次加入服务器时，都会连接到“priorities”列表中指定的默认服务器。如果设为 false，玩家会加入他们上次连接的服务器。注意：“forced_hosts”不会覆盖此设置。要使“forced_hosts”设置生效，请将此选项设为 false。对于盗版服务器，应该保持开启此选项！
+
+
+### motd（服务器信息）
+默认值："Another Bungee Server"
+类型：字符串（String）
+描述：当玩家 ping 服务器时，在多人游戏菜单中显示的信息。
+
+
+### query_enabled（启用查询）
+默认值：false
+类型：布尔值（Boolean）
+描述：是否启用 UDP 查询。
+
+
+### query_port（查询端口）
+默认值：25577
+类型：整数（Integer）
+描述：运行 UDP 查询的端口。
+
+
+### timeout（超时时间）
+默认值：30000
+类型：整数（Integer）
+描述：BungeeCord 代理无响应多长时间后，关闭所有连接。
+
+
+### connection_throttle（连接节流）
+默认值：4000
+类型：整数（Integer）
+描述：为防止攻击，客户端在最近一次连接尝试后，允许再次连接前的时间延迟（以毫秒为单位）。
+
+
+### connection_throttle_limit（连接节流限制）
+默认值：3
+类型：整数（Integer）
+描述：一旦某个 IP 在 connection_throttle 毫秒内连接了 connection_throttle_limit 次，它必须等待 connection_throttle 毫秒才能再次尝试连接。例如：在默认设置下，一个 IP 可以在 4000 毫秒（4 秒）内进行 3 次连接尝试，之后该 IP 必须等待 4 秒才能再次连接。
+
+
+## servers（服务器）
+```
+lobby:
+  address: localhost:25565
+  restricted: false
+  motd: '&1Just another BungeeCord - Forced Host'
+```
+注意：“restricted”（限制）会阻止玩家加入服务器，除非他们拥有 bungeecord.server.[servername] 权限。
+类型：映射（Map）
+描述：在这个部分中，你将列出所有通过 BungeeCord 实例连接的服务器。建议服务器名称使用小写。
+
+
+## network_compression_threshold（网络压缩阈值）
+默认值：256
+类型：整数（Integer）
+描述：设置网络数据包压缩的阈值。当数据包大小超过此值时，将对其进行压缩。值越小，压缩越频繁，可能会增加 CPU 占用，但减少网络带宽使用；值越大，压缩次数越少，CPU 占用较低，但可能增加网络带宽消耗。
+
+
+## ip_forward（IP 转发）
+默认值：true
+类型：布尔值（Boolean）
+描述：是否启用 IP 转发（将玩家的真实 IP 转发到 Bukkit，而不是代理 IP）和 UUID 转发（将玩家真实的在线模式 UUID 转发到 Bukkit，而不是离线模式的用户名哈希！）。如果你运行的是 online-mode: true 的服务器，强烈建议你使用此选项！如果使用此选项，请按照相关指南确保正确启用。
+
+
+## online_mode（在线模式）
+默认值：true
+类型：布尔值（Boolean）
+描述：BungeeCord 实例是否将与 Mojang 服务器进行身份验证。如果设为 false，盗版玩家也能加入你的服务器。
+
+
+## prevent_proxy_connections（阻止代理连接）
+默认值：false
+类型：布尔值（Boolean）
+描述：这会使服务器将连接玩家的 IP 发送给 Mojang，以检查他们是否使用代理连接到 BungeeCord。
+
+
+## proxy_protocol（代理协议）
+默认值：false
+类型：布尔值（Boolean）
+描述：允许服务器支持 HAProxy PROXY 协议。大多数用户不需要启用此选项。
+
+
+## forge_support（Forge 支持）
+默认值：false
+类型：布尔值（Boolean）
+描述：选择你的 BungeeCord 实例是否支持 Forge 客户端。
+
+
+## server_connect_timeout（服务器连接超时）
+默认值：5000
+类型：整数（Integer）
+描述：BungeeCord 在取消连接之前，尝试将玩家连接到服务器的时间（以毫秒为单位）。
+
+
+## remote_ping_timeout（远程 ping 超时）
+默认值：5000
+类型：整数（Integer）
+描述：BungeeCord 在取消连接之前，尝试 ping 服务器以获取玩家数量的时间（以毫秒为单位）。
+
+
+## remote_ping_cache（远程 ping 缓存）
+默认值：-1
+类型：整数（Integer）
+描述：BungeeCord 应使用服务器 ping 结果缓存的时间（以毫秒为单位），而不是手动 ping 它们来获取玩家数量。设为 -1 表示禁用缓存。
+
+内容由 AI 生成
